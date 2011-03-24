@@ -6,10 +6,6 @@ open System.Data.SqlClient
 open System.Text.RegularExpressions
 open Fdbup.Log
 
-//let path = "C:\\projects\\DatabaseDeployer\\src\\Scripts"
-//let connectionString = "Server=BLUTH\SQLEXPRESS;Database=bluth;Integrated Security=SSPI;"
-//let versionTable = "SchemaVersions"
-
 let validateArguments = 
     match fsi.CommandLineArgs.Length with
     | 4 -> ()
