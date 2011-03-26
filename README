@@ -7,7 +7,7 @@ Instructions
 1. Make sure the database you wish to execute the scripts on has been created.
 2. Have the SQL scripts you wish to execute in a specific directory.
 3. Make sure that the SQL scripts you wish to execute are named with numbers to put them in the right execution order (eg. Script0001.sql, Script0002.sql...).
-3. Execute "fsi path connectionString versionTable"
+4. Execute "fsi path connectionString versionTable"
 	- fsi: F# interactive interpreter.
 	- path: path to the SQL scripts you wish to execute.
 	- connectionString: database you wish to execute the scripts on.
