@@ -1,0 +1,13 @@
+Fdbup is an F# script that you can use for deploying and upgrading SQL databases.
+
+It is based heavily on the dbup project (see: http://code.google.com/p/dbup/).
+
+Instructions
+------------
+1. Make sure the database you wish to execute the scripts on has been created.
+2. Have the SQL scripts you wish to execute in a specific directory, making sure that the scripts are named with numbers to put them in the right execution order (eg. Script0001.sql, Script0002.sql...).
+3. Execute "fsi path connectionString versionTable"
+	- fsi: F# interactive interpreter.
+	- path: path to the SQL scripts you wish to execute.
+	- connectionString: database you wish to execute the scripts on.
+	- versionTable: SQL table that stores what scripts have been executed.
