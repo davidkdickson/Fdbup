@@ -1,0 +1,6 @@
+Fdbup/bin
+Fdbup/obj
+*.user
+*.suo
+_ReSharper.*
+*.sln.cache
