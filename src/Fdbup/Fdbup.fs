@@ -79,10 +79,16 @@ module Version =
     comm.ExecuteScalar() 
     |> ignore
 
-  let checkVersionTable exists create config =
-    match exists() with
-      | false -> create config; false
-      | _ -> true
+  let checkVersionTable =
+    (fun doesVersionTableExist -> 
+      (fun createVersionTable ->
+        (fun (config:VersionConfig) -> 
+          match doesVersionTableExist config with
+          | false -> createVersionTable config; false
+          | _ -> true
+        )
+      )
+    )
 
   let executedScripts config = seq {
     use conn = new SqlConnection(config.ConnectionString)
@@ -113,8 +119,8 @@ module Upgrader =
     try 
       do! logMessage "Beginning database upgrade." 
       do! match version.Check() with 
-        | true -> logMessage "Version table exists." 
-        | false -> logMessage"Version table created"
+            | true -> logMessage "Version table exists." 
+            | false -> logMessage"Version table created"
       let scriptsToExecute = getScripts()
       match scriptsToExecute |> Seq.length with           
         | l when l > 0 ->
