@@ -2,13 +2,18 @@
 // code taken from blog post by Matthew Podwysocki see 
 // http://codebetter.com/matthewpodwysocki/2010/02/02/a-kick-in-the-monads-writer-edition/
 // Also see https://gist.github.com/292392 for full source code.
-
 namespace Fdbup
 module Log =
   open System
   open System.Collections.Generic
 
   type Log<'W, 'T> = |Log of (unit -> 'T * 'W)
+
+  type Message = 
+  | Information of string
+  | Warning of string
+  | Error of string
+
   let runLog (Log l) = l()
   
   type IMonoid<'T> =
@@ -31,7 +36,7 @@ module Log =
       member this.mempty() = []
       member this.mappend(a, b) = a @ b
 
-  MonoidAssociations.Add(new ListMonoid<string>())
+  MonoidAssociations.Add(new ListMonoid<Message>())
 
   type LogBuilder() =
     member this.Return<'W,'T>(a : 'T) : Log<'W,'T> = 
@@ -66,5 +71,13 @@ module Log =
       this.Using(items.GetEnumerator(), (fun enum -> this.While((fun () -> enum.MoveNext()), this.Delay(fun () -> body enum.Current))))
 
   let log = new LogBuilder()
+  let logMessage (msg : Message) = Log(fun () -> (), [msg])
 
-  let logMessage (msg : string) = Log(fun () -> (), [msg])
+  let printConsole (success, logs) =
+    printfn "Success = %b" success
+    let printLog log = 
+      match log with
+      | Information(m) -> printfn "Information:...%s" m
+      | Warning(m) -> printfn "Warning:...%s" m
+      | Error(m) -> printfn "Error:...%s" m
+    logs |> Seq.map(fun l -> printLog l)

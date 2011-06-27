@@ -85,10 +85,7 @@ module Version =
         (fun (config:VersionConfig) -> 
           match doesVersionTableExist config with
           | false -> createVersionTable config; false
-          | _ -> true
-        )
-      )
-    )
+          | _ -> true)))
 
   let executedScripts config = seq {
     use conn = new SqlConnection(config.ConnectionString)
@@ -110,31 +107,31 @@ module Version =
 
 module Upgrader = 
   open Script
-  open Log
+  open Fdbup.Log
   open Version
   open System.Data.SqlClient
   open Printf
 
   let performUpgrade getScripts executeScript (version:IVersion) = log {
     try 
-      do! logMessage "Beginning database upgrade." 
+      do! logMessage (Information("Beginning database upgrade."))
       do! match version.Check() with 
-            | true -> logMessage "Version table exists." 
-            | false -> logMessage"Version table created"
+            | true -> logMessage (Information("Version table exists."))
+            | false -> logMessage (Information("Version table created"))
       let scriptsToExecute = getScripts()
       match scriptsToExecute |> Seq.length with           
         | l when l > 0 ->
           for script in scriptsToExecute do
-            do! logMessage (sprintf "Executing script: %s" script.ScriptName)
+            do! logMessage (Information(sprintf "Executing script: %s" script.ScriptName))
             executeScript script 
             version.Update script.ScriptName
-        | _ -> do! logMessage "Database up to date. No script executed."
+        | _ -> do! logMessage (Information("Database up to date. No script executed."))
       return true
     with 
       | :? SqlException as e -> 
-        do! logMessage (sprintf "%s %s %s %s" (e.LineNumber.ToString()) e.Procedure (e.Number.ToString()) e.Message)
+        do! logMessage (Error(sprintf "%s %s %s %s" (e.LineNumber.ToString()) e.Procedure (e.Number.ToString()) e.Message))
         return false
       | _ as e ->
-        do! logMessage (sprintf "%s" e.Message)
+        do! logMessage (Error(sprintf "%s" e.Message))
         return false
     }

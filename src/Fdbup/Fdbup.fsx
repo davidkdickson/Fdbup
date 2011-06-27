@@ -32,5 +32,6 @@ let scriptsToExecute = fun () -> scriptsToExecute (getScriptsFileSystem path) (v
 
 let executeScript script = executeScript script config.ConnectionString 
 
-let upgrade() = runLog (performUpgrade scriptsToExecute executeScript version)
+let upgrade() = printConsole (runLog (performUpgrade scriptsToExecute executeScript version))
+
 
