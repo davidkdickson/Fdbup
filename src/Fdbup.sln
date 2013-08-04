@@ -1,7 +1,9 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Fdbup", "Fdbup\Fdbup.fsproj", "{122B756F-7BF7-4260-AC05-93E6BF0E9F1F}"
+EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Fdbup.Test", "Fdbup.Test\Fdbup.Test.fsproj", "{1E6A5909-6AFD-4582-9FAF-C8C7BC2B0054}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -13,6 +15,10 @@ Global
 		{122B756F-7BF7-4260-AC05-93E6BF0E9F1F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{122B756F-7BF7-4260-AC05-93E6BF0E9F1F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{122B756F-7BF7-4260-AC05-93E6BF0E9F1F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1E6A5909-6AFD-4582-9FAF-C8C7BC2B0054}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1E6A5909-6AFD-4582-9FAF-C8C7BC2B0054}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1E6A5909-6AFD-4582-9FAF-C8C7BC2B0054}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1E6A5909-6AFD-4582-9FAF-C8C7BC2B0054}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
